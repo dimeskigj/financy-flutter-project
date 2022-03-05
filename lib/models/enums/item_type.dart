@@ -1,3 +1,3 @@
 enum ItemType {
-  expense, income
+  expense, income, undefined
 }

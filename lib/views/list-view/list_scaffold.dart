@@ -1,5 +1,8 @@
+import 'package:financy/commands/item_notifier.dart';
+import 'package:financy/views/list-view/widgets/item_card.dart';
 import 'package:financy/views/list-view/widgets/list_view_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListViewScaffold extends StatefulWidget {
   const ListViewScaffold({Key? key}) : super(key: key);
@@ -17,15 +20,7 @@ class ListViewScaffoldState extends State<ListViewScaffold> {
       body: CustomScrollView(
         slivers: [
           const ListViewAppBar(),
-          SliverToBoxAdapter(
-            child: Container(
-                margin: EdgeInsets.all(10),
-                child: Container(
-                  color: Colors.white,
-                  width: 100,
-                  height: 100,
-                )),
-          ),
+          ...context.watch<ItemNotifier>().itemList.map((e) => SliverToBoxAdapter(key: Key(e.id.toString()), child: ItemCard(e)))
         ],
       ),
     );

@@ -35,8 +35,23 @@ class ItemDatabase {
 
   static Future<List<Item>> findAll() async {
     final database = await getDatabase();
-    final List<Map<String, dynamic>> maps = await database!.query('itemsDb');
+    final List<Map<String, dynamic>> maps = await database!.query('itemsDb', orderBy: 'dateTime DESC');
+    return generateList(maps);
+  }
 
+  static Future<List<Item>> findAllBy(ItemType itemType, {String? sortBy = 'dateTime DESC'}) async {
+    final database = await getDatabase();
+    final List<Map<String, dynamic>> maps = await database!
+        .query('itemsDb', where: 'itemType = ?', whereArgs: [itemType.index], orderBy: sortBy);
+    return generateList(maps);
+  }
+
+  static Future<int> delete(int id) async {
+    final database = await getDatabase();
+    return await database!.delete('itemsDb', where: 'id = ?', whereArgs: [id]);
+  }
+
+  static List<Item> generateList(List<Map<String, dynamic>> maps) {
     return List.generate(maps.length, (index) {
       return Item(
         id: maps[index]['id'] as int,
@@ -49,10 +64,5 @@ class ItemDatabase {
         dateTime: DateTime.parse(maps[index]['dateTime'] as String),
       );
     });
-  }
-
-  static Future<int> delete(int id) async {
-    final database = await getDatabase();
-    return await database!.delete('itemsDb', where: 'id = ?', whereArgs: [id]);
   }
 }

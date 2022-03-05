@@ -1,13 +1,20 @@
+import 'package:financy/commands/item_notifier.dart';
 import 'package:financy/models/enums/item_type.dart';
+import 'package:financy/models/enums/time_frame.dart';
 import 'package:financy/models/item.dart';
 import 'package:financy/models/item_db.dart';
+import 'package:financy/services/item_service.dart';
 import 'package:financy/views/list-view/list_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => ItemNotifier()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
