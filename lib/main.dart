@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   static const Color darker = Color(0xff222831);
   static const Color dark = Color(0xff393e46);
   static const Color accent = Color(0xffd65a31);
+  static const Color secondary = Color(0xff5ad631);
   static const Color blank = Color(0xffeeeeee);
   final ThemeData _themeData = ThemeData(
     brightness: Brightness.dark,
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
       onPrimary: darker,
       surface: dark,
       onSurface: blank,
+      inversePrimary: secondary,
     ),
     textTheme: GoogleFonts.latoTextTheme(),
   );
