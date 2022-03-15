@@ -7,6 +7,8 @@ class DetailsMap extends StatelessWidget {
 
   const DetailsMap({Key? key, required this.latLng}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -14,7 +16,7 @@ class DetailsMap extends StatelessWidget {
       child: FlutterMap(
         options: MapOptions(
           center: latLng,
-          zoom: 5,
+          zoom: 13,
         ),
         layers: [
           TileLayerOptions(
@@ -30,7 +32,10 @@ class DetailsMap extends StatelessWidget {
                 width: 40.0,
                 height: 40.0,
                 point: latLng,
-                builder: (ctx) => const FlutterLogo(),
+                builder: (ctx) => const Icon(
+                  Icons.my_location,
+                  color: Colors.red,
+                ),
               ),
             ],
           ),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
@@ -6,6 +5,7 @@ import 'package:latlong2/latlong.dart';
 import '../../../models/item.dart';
 import 'details_sub_item.dart';
 import 'map.dart';
+import 'map_wrapper.dart';
 
 class DetailsBody extends StatelessWidget {
   final Item item;
@@ -27,7 +27,7 @@ class DetailsBody extends StatelessWidget {
     return ListView(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,10 +68,7 @@ class DetailsBody extends StatelessWidget {
               const Divider(
                 thickness: 0.8,
               ),
-              // Expanded(child: DetailsMap(latLng: LatLng(item.latitude, item.longitude),)),
-              DetailsMap(
-                latLng: LatLng(item.latitude, item.longitude),
-              ),
+              MapWrapper(latLng: LatLng(item.latitude, item.longitude)),
             ],
           ),
         ),

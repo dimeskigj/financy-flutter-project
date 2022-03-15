@@ -19,6 +19,11 @@ class ItemNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void getCurrent() async {
+    itemList = await ItemService.findAllWithinTimeFrame(selectedTimeFrame, selectedItemType);
+    notifyListeners();
+  }
+
   void insert(Item item) async {
     await ItemService.insert(item);
   }

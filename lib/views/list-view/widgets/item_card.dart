@@ -40,12 +40,12 @@ class ItemCard extends StatelessWidget {
           Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext context) => DetailsScaffold(item: _item)));
         },
         child: Container(
-          margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+          margin: const EdgeInsets.fromLTRB(5, 2.5, 5, 2.5),
           child: SizedBox(
             height: 125,
             child: Card(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
