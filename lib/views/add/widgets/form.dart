@@ -1,6 +1,7 @@
 import 'package:financy/models/enums/item_type.dart';
 import 'package:financy/services/location_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,7 @@ class AddFormState extends State<AddForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _titleC = TextEditingController(), _descC = TextEditingController(), _amountC = TextEditingController();
   var _isIncome = true;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class AddFormState extends State<AddForm> {
         margin: const EdgeInsets.only(right: 10, left: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
               children: [
@@ -43,6 +45,24 @@ class AddFormState extends State<AddForm> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _amountC,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please add an amount for this entry';
+                            } else if (double.parse(value) < 0 && _isIncome) {
+                              return 'Please add a positive amount for incomes';
+                            } else if (double.parse(value) >= 0 && !_isIncome) {
+                              return 'Please add a negative amount for expenses';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+                          decoration: const InputDecoration(labelText: 'Amount', border: OutlineInputBorder()),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: CircleAvatar(
@@ -61,24 +81,6 @@ class AddFormState extends State<AddForm> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _amountC,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please add an amount for this entry';
-                            } else if (double.parse(value) < 0 && _isIncome) {
-                              return 'Please add a positive amount for incomes';
-                            } else if (double.parse(value) >= 0 && !_isIncome) {
-                              return 'Please add a negative amount for expenses';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-                          decoration: const InputDecoration(labelText: 'Amount', border: OutlineInputBorder()),
-                        ),
-                      )
                     ],
                   ),
                 )
@@ -100,6 +102,8 @@ class AddFormState extends State<AddForm> {
                 ),
                 onTap: () async {
                   if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+                    _isLoading = true;
+                    FocusScope.of(context).requestFocus(FocusNode());
                     LatLng location = await LocationService.getLocation();
                     await ItemService.insert(Item(
                         title: _titleC.text,
@@ -109,12 +113,20 @@ class AddFormState extends State<AddForm> {
                         itemType: _isIncome ? ItemType.income : ItemType.expense,
                         latitude: location.latitude,
                         longitude: location.longitude));
+                    _isLoading = false;
                     Provider.of<ItemNotifier>(context, listen: false).getCurrent();
                     Navigator.of(context).pop();
                   }
                 },
               ),
-            )
+            ),
+            _isLoading
+                ? Expanded(
+                    child: Center(
+                        child: SpinKitFoldingCube(
+                    color: _isIncome ? Theme.of(context).colorScheme.inversePrimary : Theme.of(context).colorScheme.primary,
+                  )))
+                : Container()
           ],
         ),
       ),

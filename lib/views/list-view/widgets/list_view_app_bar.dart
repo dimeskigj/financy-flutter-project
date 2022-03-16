@@ -6,7 +6,9 @@ import '../../../models/enums/item_type.dart';
 import '../../../models/enums/time_frame.dart';
 
 class ListViewAppBar extends StatefulWidget {
-  const ListViewAppBar({Key? key}) : super(key: key);
+  ListViewAppBar({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ListViewAppBar> createState() => _ListViewAppBarState();
