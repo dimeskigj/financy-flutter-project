@@ -102,7 +102,9 @@ class AddFormState extends State<AddForm> {
                 ),
                 onTap: () async {
                   if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-                    _isLoading = true;
+                    setState(() {
+                      _isLoading = true;
+                    });
                     FocusScope.of(context).requestFocus(FocusNode());
                     LatLng location = await LocationService.getLocation();
                     await ItemService.insert(Item(
@@ -113,7 +115,6 @@ class AddFormState extends State<AddForm> {
                         itemType: _isIncome ? ItemType.income : ItemType.expense,
                         latitude: location.latitude,
                         longitude: location.longitude));
-                    _isLoading = false;
                     Provider.of<ItemNotifier>(context, listen: false).getCurrent();
                     Navigator.of(context).pop();
                   }

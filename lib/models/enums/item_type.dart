@@ -1,3 +1,1 @@
-enum ItemType {
-  expense, income, undefined
-}
+enum ItemType { expense, income, undefined }

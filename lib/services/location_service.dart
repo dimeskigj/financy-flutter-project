@@ -1,7 +1,8 @@
+import 'dart:convert' as convert;
+
+import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 
 class LocationService {
   LocationService._internal();

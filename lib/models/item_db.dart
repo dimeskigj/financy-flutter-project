@@ -29,8 +29,7 @@ class ItemDatabase {
 
   static Future<int> insertItem(Item item) async {
     final database = await getDatabase();
-    return await database!
-        .insert('itemsDb', item.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    return await database!.insert('itemsDb', item.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   static Future<List<Item>> findAll() async {
@@ -41,8 +40,8 @@ class ItemDatabase {
 
   static Future<List<Item>> findAllBy(ItemType itemType, {String? sortBy = 'dateTime DESC'}) async {
     final database = await getDatabase();
-    final List<Map<String, dynamic>> maps = await database!
-        .query('itemsDb', where: 'itemType = ?', whereArgs: [itemType.index], orderBy: sortBy);
+    final List<Map<String, dynamic>> maps =
+        await database!.query('itemsDb', where: 'itemType = ?', whereArgs: [itemType.index], orderBy: sortBy);
     return generateList(maps);
   }
 

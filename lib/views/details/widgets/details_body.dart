@@ -4,7 +4,6 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../models/item.dart';
 import 'details_sub_item.dart';
-import 'map.dart';
 import 'map_wrapper.dart';
 
 class DetailsBody extends StatelessWidget {

@@ -29,8 +29,7 @@ class ItemService {
     return await ItemDatabase.delete(id);
   }
 
-  static Future<List<Item>> findAllWithinTimeFrame(
-      TimeFrame timeFrame, [ItemType? itemType, String? sortBy]) async {
+  static Future<List<Item>> findAllWithinTimeFrame(TimeFrame timeFrame, [ItemType? itemType, String? sortBy]) async {
     //I'm not that good with queries 😓
     List<Item> unfiltered = await findAll(itemType, sortBy);
     if (timeFrame == TimeFrame.all) return unfiltered;
@@ -39,8 +38,7 @@ class ItemService {
         : timeFrame == TimeFrame.lastWeek
             ? 7
             : 30;
-    unfiltered.removeWhere((element) =>
-        element.dateTime.isBefore(DateTime.now().subtract(Duration(days: daysToSubtract))));
+    unfiltered.removeWhere((element) => element.dateTime.isBefore(DateTime.now().subtract(Duration(days: daysToSubtract))));
     return unfiltered;
   }
 }

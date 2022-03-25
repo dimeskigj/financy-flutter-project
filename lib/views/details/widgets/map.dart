@@ -7,8 +7,6 @@ class DetailsMap extends StatelessWidget {
 
   const DetailsMap({Key? key, required this.latLng}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(

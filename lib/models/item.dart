@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'enums/item_type.dart';
 
 class Item {

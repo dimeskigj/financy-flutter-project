@@ -1,3 +1,1 @@
-enum TimeFrame {
-  all, today, lastWeek, lastMonth
-}
+enum TimeFrame { all, today, lastWeek, lastMonth }
